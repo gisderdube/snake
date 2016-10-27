@@ -1,0 +1,451 @@
+$darkBg: #7B1FA2
+$midBg: #9C27B0
+$lightBg: #e1bee7
+
+$accent: #009688
+
+$darkText: #212121
+$lightText: #757575
+
+$divider: #BDBDBD
+
+$gameDimension: 480px
+$snakeSize: 20px
+
+@mixin non-select()
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+  cursor: default
+
+
+*
+  box-sizing: border-box
+  font-family: 'Lato', sans-serif
+
+p
+  font-size: 22px
+
+html, body
+  margin: 0
+  padding: 0
+
+body
+  width: 100vw
+  height: 100vh
+  overflow: hidden
+
+button:hover
+  cursor: pointer !important
+
+#scrollButton
+  +non-select()
+  z-index: 999
+  position: fixed
+  height: 50px
+  width: 50px
+  bottom: 25px
+  right: 25px
+  background-color: $lightBg
+  color: white
+  font-size: 25px
+  display: flex
+  border: none
+  border-radius: 3px
+
+  transition: all 500ms ease-in-out, transform 200ms ease-in-out
+
+  &:focus
+    outline: none
+
+  &:hover
+    transform: scale(1.2)
+    cursor: pointer
+
+  &.to-animate
+    transform: translateY(25px)
+    opacity: 0
+
+  &.pointing-up
+    bottom: calc(100% - 75px)
+    transform: rotate(180deg)
+  &.pointing-up:hover
+    transform: scale(1.2) rotate(180deg)
+    cursor: pointer
+
+
+
+  i
+    margin: auto
+
+#welcome
+  +non-select()
+  transition: 500ms all ease-in-out
+  &.away
+    margin-top: -100vh
+
+  header
+    height: 50vh
+    background-color: $darkBg
+    position: relative
+
+    h1
+      display: block
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      color: white
+      margin: 0
+      padding: 0
+
+    .snake-emblem
+      width: 150px
+      height: 75px
+      position: absolute
+      bottom: 0
+      left: 50%
+      transform: translate(-50%, 50%)
+      border: 2px solid $darkBg
+      background-color: white
+      border-radius: 3px
+
+      display: flex
+      justify-content: center
+      align-items: center
+      transition: all 500ms ease-in
+
+      &.no-border-offset
+        border: none
+        transform: translate(-50%, 100%)
+
+      .snake, .dot
+        background-color: $darkBg
+        height: 20px
+        //margin: auto
+
+      .snake
+        width: 75px
+        margin-right: 5px
+        transition: all 1000ms linear
+
+      &.to-animate .snake
+        transform: translateX(-20vw)
+
+      &.dot-eaten .snake
+        transform: translateX(20vw)
+
+      .dot
+        margin-left: 5px
+        height: 18px
+        width: 18px
+        border-radius: 9px
+        background-color: $accent
+        transition: all 100ms ease-out
+          delay: 100ms
+
+      &.dot-eaten .dot
+        opacity: 0
+
+  .description
+    height: 50vh
+    display: flex
+
+    h2
+      margin: auto
+      color: $darkBg
+
+
+#game
+  width: 100vw
+  height: 100vh
+  position: relative
+  .instructions
+    +non-select()
+    z-index: 40
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    background-color: $midBg
+    color: white
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    transition: all 500ms ease-in-out
+
+    &.away
+      transform: translateY(100%)
+
+    p
+      padding: 0
+      margin: 25px
+
+    button
+      width: 175px
+      height: 75px
+      border-radius: 3px
+      margin: 25px
+      background-color: $lightBg
+      color: white
+      border: none
+      font-size: 25px
+      font-weight: 700
+      transition: all 200ms ease-in-out
+
+      &:focus
+        outline: none
+        cursor: pointer
+
+      &:hover
+        transform: scale(1.2)
+
+    .difficulty-wrapper
+      margin-left: auto
+      margin-right: auto
+      padding: 0 10%
+      display: flex
+      flex-direction: row
+      flex-wrap: wrap
+      justify-items: center
+      align-items: center
+      margin-top: 50px
+      margin-bottom: 50px
+
+      button.difficulty
+        flex: 1
+        margin: 0
+        border-radius: 0
+        font-size: 20px
+        background-color: $accent
+
+        &:hover
+          transform: none
+          background-color: $accent * 0.9
+          cursor: pointer
+        &.active
+          background-color: $accent * 0.8
+
+
+  .game-wrapper
+    z-index: 35
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    //background-color: $darkBg
+    color: white
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+    .top-wrapper
+      position: absolute
+      height: 50%
+      width: 100%
+      top: 0
+      background-color: white
+
+    .bot-wrapper
+      position: absolute
+      height: 50%
+      width: 100%
+      top: 50%
+      background-color: $darkBg
+
+
+
+    .score
+      z-index: 40
+      +non-select()
+      background-color: $lightBg
+      width: $gameDimension
+      height: 50px
+      border-radius: 3px 3px 0 0
+      display: flex
+      justify-content: space-between
+      align-items: center
+      border: 2px solid $darkBg
+      border-bottom: none
+
+
+      .time, .highest-wrapper, .score-wrapper
+        margin: 0 10px
+
+      .time, .highest-text, .highest-value, .score-text, .score-value
+        display: inline
+        font-family: 'VT323', monospace
+        font-size: 35px
+        text-transform: uppercase
+
+      .time
+        text-transform: none
+
+
+
+
+    .game-box
+      width: $gameDimension
+      height: $gameDimension
+      background-color: white
+      border-radius: 0 0 3px 3px
+      position: relative
+      overflow: hidden
+      border: 2px solid $darkBg
+      border-top: none
+
+
+      .snake-wrapper
+        .snake-part
+          z-index: 37
+          position: absolute
+          background-color: $darkBg
+          left: 0
+          top: 0
+          width: $snakeSize
+          height: $snakeSize
+          margin: 0
+          padding: 0
+
+
+      .dot
+        z-index: 36
+        position: absolute
+        background-color: $accent
+        width: $snakeSize
+        height: $snakeSize
+        border-radius: $snakeSize
+
+      .game-over-notice
+        position: absolute
+        left: 0
+        top: 0
+        background-color: $lightBg
+        width: $gameDimension
+        height: $gameDimension
+        z-index: 39
+        transition: all 500ms ease-in-out
+        font-family: 'VT323', monospace
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        +non-select()
+
+
+        h1
+          font-size: 55px
+          font-family: 'VT323', monospace
+          margin: 25px
+
+        button
+          width: 175px
+          height: 75px
+          border-radius: 3px
+          margin: 50px
+          background-color: $accent
+          color: white
+          border: none
+          font-size: 25px
+          font-weight: 700
+          transition: all 200ms ease-in-out
+
+          &:focus
+            outline: none
+            cursor: pointer
+
+          &:hover
+            transform: scale(1.2)
+
+          &.options
+            width: 125px
+            height: 50px
+            font-size: 20px
+
+
+            &:hover
+              transform: scale(1.1)
+
+
+        &.away
+          top: 100%
+
+      .options-screen
+        position: absolute
+        left: 0
+        top: 0
+        background-color: $lightBg
+        width: $gameDimension
+        height: $gameDimension
+        z-index: 39
+        transition: all 500ms ease-in-out
+        font-family: 'VT323', monospace
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        +non-select()
+
+
+        h1
+          font-size: 55px
+          font-family: 'VT323', monospace
+          margin: 25px
+
+        button
+          width: 125px
+          height: 50px
+          border-radius: 3px
+          margin: 50px
+          background-color: $accent
+          color: white
+          border: none
+          font-size: 20px
+          font-weight: 700
+          transition: all 200ms ease-in-out
+
+          &:focus
+            outline: none
+            cursor: pointer
+
+          &:hover
+            transform: scale(1.1)
+        &.away
+          top: 100%
+
+      .difficulty-wrapper
+        margin-left: auto
+        margin-right: auto
+        padding: 0 10%
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+        justify-items: center
+        align-items: center
+
+        button.difficulty
+          flex: 2
+          margin: 0
+          border-radius: 0
+          background-color: $accent
+
+          &:hover
+            transform: none
+            background-color: $accent * 0.9
+            cursor: pointer
+          &.active
+            background-color: $accent * 0.8
+
+
+
+
+
+
+
+
+

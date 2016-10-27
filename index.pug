@@ -1,0 +1,75 @@
+html
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+        title CSS Snake
+
+        link(rel="stylesheet" href="./frameworks/font-awesome-4.6.3/css/font-awesome.min.css")
+        script(type="text/javascript" src="./frameworks/jquery-2.1.4.min.js")
+
+        link(rel="stylesheet" href="./stylesheets/style.css")
+
+    body
+        button#scrollButton.to-animate
+            i.fa.fa-arrow-down
+        #welcome
+            header
+                h1 Let's play Snake!
+
+                .snake-emblem.to-animate.no-border-offset
+                    .snake
+                    .dot
+
+            .description
+               h2 CSS enhanced with Javascript
+
+        #game
+            .instructions
+                p Use the arrow keys to control the snake!
+                p Ready?
+                .difficulty-wrapper
+                    button.difficulty.grandpa Grandpa
+                    button.difficulty.normal.active Normal
+                    button.difficulty.fast Fast
+                    button.difficulty.insane Insane
+                button.go Go
+            .game-wrapper
+                .top-wrapper
+                .bot-wrapper
+                .score
+                    .time
+                        | 0:00
+                    .highest-wrapper
+                        .highest-text
+                            | Highest &#32;
+                        .highest-value
+                            | 0
+                    .score-wrapper
+                        .score-text
+                            | Score &#32;
+                        .score-value
+                            | 0
+
+                .game-box
+                    .snake-wrapper
+                    .dot
+                    .game-over-notice.away
+                        h1 Game Over
+                        button.options Options
+                        button.play Play Again
+                    .options-screen.away
+                        h1 Difficulty
+
+                        .difficulty-wrapper
+                            button.difficulty.grandpa Grandpa
+                            button.difficulty.normal.active Normal
+                            button.difficulty.fast Fast
+                            button.difficulty.insane Insane
+
+                        button.back Back
+
+
+
+
+        script(type="text/javascript" src="./index.js")
